@@ -15,7 +15,7 @@
 
 This is a project to clone the user page of the e-commerce platform [Shopee](https://shopee.com).
 
-**Technologies used**: REST API, ReactJs, Typescript, Tailwindcss, React Router, React Hook Form, Yup, React Query, Vite, Vitest, Storybook, ESLint, Prettier, React Helmetaa
+**Technologies used**: REST API, ReactJs, Typescript, Tailwindcss, React Router, React Hook Form, Yup, React Query, Vite, Vitest, Storybook, ESLint, Prettieasdsadsadr, React Helmetaa
 
 **Functions include**:
 
