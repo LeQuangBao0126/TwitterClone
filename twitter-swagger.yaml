@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0 for Twitter Clone 2023
+  description: |-
+    Đây là project clone nho nhỏ Twitter API - Swagger and OpenAPI
+  version: 1.0.11
+servers:
+  - url: http://localhost:4000
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  /users/login:
+    post:
+      tags:
+        - user
+      summary: Login user
+      description: Login user
+      operationId: login
+      requestBody:
+        description: Thông tin đăng nhập
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginBody'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessAuthentication'
+  /users/me:
+    get:
+      tags:
+        - user
+      summary: getMe
+      description: Get me
+      operationId: getMe
+      responses:
+        '200':
+          description: Lấy thông tin user thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security: [{ bearerAuth: [] }]
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginBody:
+      type: object
+      properties:
+        email:
+          type: string
+          example: baobadao2@gmail.com
+        password:
+          type: string
+          example: 123456
+    SuccessAuthentication:
+      type: object
+      properties:
+        message:
+          type: string
+        result:
+          type: object
+          properties:
+            access_token:
+              type: string
+            refresh_token:
+              type: object
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: '64b40570cb87275d8481e993'
+        name:
+          type: string
+          example: 'baobadao'
+        email:
+          type: string
+          example: 'baobadao@gmail.com'
+        date_of_birth:
+          type: string
+          format: ISO8601
+          example: '2023-06-15T14:02:49.531Z'
+        created_at:
+          type: string
+          format: ISO8601
+          example: '2023-07-16T14:57:52.591Z'
+        updated_at:
+          type: string
+          format: ISO8601
+          example: '2023-07-16T14:57:52.591Z'
+        verify:
+          $ref: '#/components/schemas/UserVerifyStatus'
+        twitter_cirle:
+          type: array
+          items:
+            type: string
+            example: '64ba3e01bd98d6d275fb345e'
+        bio:
+          type: string
+          example: ''
+        location:
+          type: string
+          example: ''
+        website:
+          type: string
+          example: ''
+        username:
+          type: string
+          example: 'user64b40570cb87275d8481e993'
+        avatar:
+          type: string
+          example: ''
+        cover_photo:
+          type: string
+          example: ''
+    UserVerifyStatus:
+      type: number
+      enum: [0, 1, 2]
+      example: 1
