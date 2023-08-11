@@ -8,7 +8,7 @@ import staticRouter from './routes/statics.routes'
 import { initFolder } from './utils/file'
 import { UPLOAD_VIDEO_DIR } from './constants/dir'
 import cors from 'cors'
-import { MongoClient, ServerApiVersion } from 'mongodb'
+import { envConfig } from '~/constants/config'
 import tweetRouter from './routes/tweets.routes'
 import bookmartRouter from './routes/bookmarks.routes'
 
@@ -21,10 +21,10 @@ import { initialSocket } from '~/utils/socket'
 import swaggerUi from 'swagger-ui-express'
 import fs from 'fs'
 import YAML from 'yaml'
-import swaggerJsdoc from 'swagger-jsdoc'
 
 const app = express()
-const port = process.env.PORT || 4000
+const port = envConfig.APP_PORT
+
 const httpServer = createServer(app)
 
 // Tạo folder upload
@@ -35,16 +35,16 @@ const swaggerDocument = YAML.parse(file)
 
 //
 
-const options: swaggerJsdoc.Options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Hello World',
-      version: '1.0.0'
-    }
-  },
-  apis: ['./src/routes/*.routes.ts'] // files containing annotations as above
-}
+// const options: swaggerJsdoc.Options = {
+//   definition: {
+//     openapi: '3.0.0',
+//     info: {
+//       title: 'Hello World',
+//       version: '1.0.0'
+//     }
+//   },
+//   apis: ['./src/routes/*.routes.ts'] // files containing annotations as above
+// }
 //const openapiSpecification = swaggerJsdoc(options)
 
 databaseService
@@ -74,8 +74,8 @@ databaseService
     app.use(defaultErrorHandler)
     //web socket
     initialSocket(httpServer)
-    httpServer.listen(port, () => {
-      console.log(`App running in port ${port}`)
+    httpServer.listen(envConfig.APP_PORT, () => {
+      console.log(`App running in host ${envConfig.APP_HOST} :::: port ${port}`)
     })
   })
   .catch((err) => {
@@ -84,27 +84,3 @@ databaseService
 
 //w6XihFfjoVhuxJhV database pass dbname twitter-dev
 //mongodb+srv://quangbao01268183903:w6XihFfjoVhuxJhV@twitter-dev.eyatwzk.mongodb.net/
-
-function getRandomNumber() {
-  return Math.floor(Math.random() * 100) + 1
-}
-function initEarthDB() {
-  const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.eyatwzk.mongodb.net/`
-  const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: false,
-      deprecationErrors: true
-    }
-  })
-  const db = client.db('earch').collection('users')
-  const users = []
-
-  for (let i = 0; i < 1000; i++) {
-    const u = { name: 'users_' + i, age: getRandomNumber(), sex: i % 2 === 0 ? 'male' : 'female' }
-    users.push(u)
-  }
-  db.insertMany(users)
-}
-
-//initEarthDB()
