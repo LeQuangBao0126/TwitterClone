@@ -1,6 +1,5 @@
 import { Request } from 'express'
 import { getFiles, getNameFromFullName, handleUploadImage, handleUploadVideo } from '~/utils/file'
-import sharp from 'sharp'
 import { UPLOAD_IMAGE_DIR, UPLOAD_VIDEO_DIR } from '~/constants/dir'
 import { isProduction } from '~/constants/config'
 import 'dotenv/config'
@@ -112,7 +111,7 @@ class MediasService {
         const newFullFileName = `${newName}.jpg`
         const newPath = UPLOAD_IMAGE_DIR + '/' + newFullFileName
         // fs.unlinkSync(file.filepath)
-        await sharp(file.filepath).resize(200, 200).toFile(newPath)
+        // await sharp(file.filepath).resize(200, 200).toFile(newPath)
         console.log('nen success')
         // upload s3
         const s3Rs = await uploadFileToS3({
