@@ -57,6 +57,9 @@ databaseService
       })
     )
     app.use(express.json())
+    app.get('/hc', (req, res) => {
+      return res.json('Server is ready')
+    })
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     app.use('/users', usersRouter)
     app.use('/medias', mediasRouter)
