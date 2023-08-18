@@ -8,8 +8,10 @@ export const isProduction = options.env === 'production'
 config({
   path: options.env ? `.env.${options.env}` : '.env'
 })
-console.log(process.env)
+
 export const envConfig = {
   APP_PORT: (process.env.APP_PORT as string) || 4000,
-  APP_HOST: process.env.APP_HOST as string
+  APP_HOST: process.env.APP_HOST as string,
+  DB_NAME: process.env.APP_HOST as string,
+  DB_USERNAME: process.env.DB_USERNAME as string
 }
